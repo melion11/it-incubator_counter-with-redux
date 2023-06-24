@@ -1,0 +1,18 @@
+.buttonWrap {
+    width: 450px;
+    background-color: #89b4b0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+.counterItem {
+    border-radius: 10px;
+    font-size: 20px;
+    color: #a45ca4;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+
+}
+

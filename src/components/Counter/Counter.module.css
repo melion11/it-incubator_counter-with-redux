@@ -1,0 +1,53 @@
+.buttonsWrap {
+    width: 450px;
+    background-color: #89b4b0;
+    padding: 20px;
+    gap: 50px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.counterItem {
+    width: 450px;
+    margin-bottom: 30px;
+    background-color: #89b4b0;
+    padding: 50px;
+    border-radius: 10px;
+    font-size: 50px;
+    color: #a45ca4;
+    font-weight: bold;
+}
+
+.counterRed {
+    color: #bb1515;
+}
+
+.spanChange {
+    font-size: 20px;
+    font-weight: bold;
+    color: #a45ca4;
+    margin-bottom: 50px;
+}
+
+.spanError {
+    font-size: 50px;
+    font-weight: bold;
+    color: #bb1515;
+    margin-bottom: 50px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.transitionContainer {
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.transitionContainerActive {
+    opacity: 1;
+}
