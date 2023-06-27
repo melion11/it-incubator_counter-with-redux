@@ -9,7 +9,7 @@ export type InitialStateType = {
 
 }
 
-const initialState: any = {
+const initialState: InitialStateType = {
     counter: {
         count: 0,
         minValue: 0,
@@ -19,7 +19,7 @@ const initialState: any = {
 }
 
 
-export const counterReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const counterReducer = (state:InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'ADD-COUNT': {
             return {...state, counter: {...state.counter, count: state.counter.count + 1} }

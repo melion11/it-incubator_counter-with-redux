@@ -12,7 +12,8 @@ function App() {
     // const startMinValue = Number(localStorage.getItem('minCounterValue')) || 0
     // const startMaxValue = Number(localStorage.getItem('maxCounterValue')) || 5
 
-    const counterState = useAppSelector(state => state.counter)
+    const minValue = useAppSelector(state => state.counter.counter.minValue)
+    const maxValue = useAppSelector(state => state.counter.counter.maxValue)
     const dispatch = useDispatch()
 
     // const [counter, setCounter] = useState<number>(() => {
@@ -30,11 +31,11 @@ function App() {
 
     const resetCount = () => {
         dispatch(resetCountAC())
-        if (counterState.counter.minValue < 0) dispatch(resetCountAC())
+        if (minValue < 0) dispatch(resetCountAC())
     }
 
     const getMaxValue = (max: number) => {
-        if (counterState.counter.minValue < 0 || max <= 0 || max <= counterState.counter.minValue) {
+        if (minValue < 0 || max <= 0 || max <= minValue) {
             setError('Incorrect Value!')
         } else {
             setError(`Enter values and press "set"`)
@@ -45,7 +46,7 @@ function App() {
         }
     }
     const getMinValue = (min: number) => {
-        if (min < 0 || counterState.counter.maxValue <= min) {
+        if (min < 0 || maxValue <= min) {
             setError('Incorrect Value!')
         } else {
             setError(`Enter values and press "set"`)

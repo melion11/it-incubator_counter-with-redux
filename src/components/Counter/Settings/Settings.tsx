@@ -20,7 +20,8 @@ export const Settings: FC<SettingsPropsType> = (props) => {
         const {getMaxValue, getMinValue,settingsChanged,
             setSettingsChanged, error,setSettingsView, ...restProps} = props
 
-    const counterState = useAppSelector(state => state.counter.counter)
+    const minValue = useAppSelector(state => state.counter.counter.minValue)
+    const maxValue = useAppSelector(state => state.counter.counter.maxValue)
 
         const settingsChangeStatusHandler = () =>{
            // localStorage.setItem('minCounterValue', JSON.stringify(minValue))
@@ -29,23 +30,24 @@ export const Settings: FC<SettingsPropsType> = (props) => {
            setSettingsView(false)
         }
 
-        const minError = counterState.minValue < 0 || counterState.maxValue <= 0
-        || counterState.maxValue <= counterState.minValue ? 'Incorrect Value!' : ''
 
-        const maxError = counterState.minValue < 0 || counterState.maxValue <=
-        counterState.minValue ? 'Incorrect Value!' : ''
 
-        const disabledButton = counterState.minValue < 0 || counterState.maxValue <= counterState.minValue
+
+
+
+        const minError = (minValue < 0 || maxValue <= 0 || maxValue <= minValue) ? 'Incorrect Value!' : ''
+        const maxError = (minValue < 0 || maxValue <= minValue) ? 'Incorrect Value!' : ''
+        const disabledButton = minValue < 0 || maxValue <= minValue
 
         return (
             <div >
                     <div className={s.counterItem}>
                         <InputValue error={minError}
                                     getCurrentValue={getMaxValue}
-                                    title={'maxValue'} value={counterState.maxValue} />
+                                    title={'maxValue'} value={maxValue} />
                         <InputValue error={maxError}
                                     getCurrentValue={getMinValue}
-                                    title={'startValue'} value={counterState.minValue} />
+                                    title={'startValue'} value={minValue} />
                     </div>
 
 
