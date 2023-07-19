@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import s from './Counter.module.css';
-import {useAppSelector} from '../../hooks/hooks';
+import s from '../Counter.module.css';
+import {useAppSelector} from '../../../hooks/hooks';
 
 
 export type DisplayType = {

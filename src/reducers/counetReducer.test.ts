@@ -1,4 +1,4 @@
-import {addCountAC, counterReducer, getMaxValueAC, getMinValueAC, resetCountAC} from './counterReducer';
+import {addCountAC, counterReducer, setMaxValueAC, setMinValueAC, resetCountAC} from './counterReducer';
 
 
 test('count should be increase +1', ()=> {
@@ -29,7 +29,7 @@ test('counter should be reset', ()=> {
         }
     }
 
-    const endState = counterReducer(startState, resetCountAC())
+    const endState = counterReducer(startState, resetCountAC(0))
 
     expect(endState.counter.count).toBe(0)
     expect(endState.counter.minValue).toBe(0)
@@ -47,7 +47,7 @@ test('counter min value should be changed', ()=> {
         }
     }
 
-    const endState = counterReducer(startState, getMinValueAC(5))
+    const endState = counterReducer(startState, setMinValueAC(5))
 
     expect(endState.counter.count).toBe(0)
     expect(startState.counter.count).toBe(0)
@@ -66,7 +66,7 @@ test('counter max value should be changed', ()=> {
         }
     }
 
-    const endState = counterReducer(startState, getMaxValueAC(10))
+    const endState = counterReducer(startState, setMaxValueAC(10))
 
     expect(endState.counter.count).toBe(0)
     expect(startState.counter.maxValue).toBe(5)

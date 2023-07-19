@@ -1,3 +1,6 @@
+import {Dispatch} from 'redux';
+import {AppDispatch, RootState} from '../store/store';
+
 export type CounterType = {
     count: number
     minValue: number
@@ -19,26 +22,30 @@ const initialState: InitialStateType = {
 }
 
 
-export const counterReducer = (state:InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const counterReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'ADD-COUNT': {
-            return {...state, counter: {...state.counter, count: state.counter.count + 1} }
+            return {...state, counter: {...state.counter, count: state.counter.count + 1}}
         }
         case 'RESET-COUNT': {
-            return {...state, counter: {...state.counter, count: state.counter.minValue}}
+            return {...state, counter: {...state.counter, count: action.payload.minValue}}
         }
-        case 'GET-MIN-VALUE': {
-            return  {...state, counter: {...state.counter, minValue: action.payload.min, count: action.payload.min}}
+        case 'SET-MIN-VALUE': {
+            return {...state, counter: {...state.counter, minValue: action.payload.min}}
         }
-        case 'GET-MAX-VALUE': {
-            return  {...state, counter: {...state.counter, maxValue: action.payload.max}}
+        case 'SET-MAX-VALUE': {
+            return {...state, counter: {...state.counter, maxValue: action.payload.max}}
+        }
+        case 'SET-NUMBER-FROM-LS': {
+            return {...state, counter: {...state.counter, count: action.payload.count}}
         }
         default:
             return state
     }
 }
 
-export type ActionsType = AddCountACType | ResetCountACType | GetMinValueACType | GetMaxValueACType
+export type ActionsType = AddCountACType | ResetCountACType |
+    SetMinValueACType | SetMaxValueACType | SetCountFromLocalStorageACType
 
 export type AddCountACType = ReturnType<typeof addCountAC>
 export const addCountAC = () => {
@@ -46,26 +53,76 @@ export const addCountAC = () => {
 }
 
 export type ResetCountACType = ReturnType<typeof resetCountAC>
-export const resetCountAC = () => {
-    return {type: 'RESET-COUNT'} as const
+export const resetCountAC = (minValue: number) => {
+    return {
+        type: 'RESET-COUNT',
+        payload: {
+            minValue
+        }
+
+    } as const
 }
 
-export type GetMinValueACType = ReturnType<typeof getMinValueAC>
-export const getMinValueAC = (min: number) => {
+export type SetMinValueACType = ReturnType<typeof setMinValueAC>
+export const setMinValueAC = (min: number) => {
     return {
-        type: 'GET-MIN-VALUE',
+        type: 'SET-MIN-VALUE',
         payload: {
             min
         }
     } as const
 }
 
-export type GetMaxValueACType = ReturnType<typeof getMaxValueAC>
-export const getMaxValueAC = (max: number) => {
+export type SetMaxValueACType = ReturnType<typeof setMaxValueAC>
+export const setMaxValueAC = (max: number) => {
     return {
-        type: 'GET-MAX-VALUE',
+        type: 'SET-MAX-VALUE',
         payload: {
             max
         }
     } as const
+}
+
+export type SetCountFromLocalStorageACType = ReturnType<typeof setCountFromLocalStorageAC>
+export const setCountFromLocalStorageAC = (count: number) => {
+    return {
+        type: 'SET-NUMBER-FROM-LS',
+        payload: {
+            count
+        }
+    } as const
+}
+
+
+//Thunk
+
+export const setNumberFromLocalStorage = ():any  => (dispatch: AppDispatch, getState: () => RootState) => {
+    let count = getState().counter.counter.count
+    localStorage.setItem('counterValue', JSON.stringify(count + 1))
+    dispatch(addCountAC())
+}
+
+export const getNumberFromLocalStorage = ():any  => (dispatch: AppDispatch) => {
+    dispatch(setCountFromLocalStorageAC(Number(localStorage.getItem('counterValue')) || 0))
+}
+
+export const setMinMaxValuesToLocalStorage = (minValue: number, maxValue: number):any  => (dispatch: AppDispatch) => {
+    localStorage.setItem('minCounterValue', JSON.stringify(minValue))
+    localStorage.setItem('maxCounterValue', JSON.stringify(maxValue))
+    localStorage.setItem('counterValue', JSON.stringify(minValue))
+    dispatch(setMinValueAC(minValue))
+    dispatch(setMaxValueAC(maxValue))
+}
+
+export const getMinMaxValuesFromLocalStorage = ():any  => (dispatch: AppDispatch) => {
+    dispatch(setMinValueAC(Number(localStorage.getItem('minCounterValue')) || 0))
+    dispatch(setMaxValueAC(Number(localStorage.getItem('maxCounterValue')) || 5))
+}
+
+
+export const resetNumberFromLocalStorage = ():any => (dispatch: any, getState: () => RootState) => {
+    let minValue = getState().counter.counter.minValue
+    localStorage.setItem('counterValue', JSON.stringify(minValue))
+    dispatch(resetCountAC(Number(localStorage.getItem('minCounterValue'))))
+
 }
