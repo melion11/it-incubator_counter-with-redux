@@ -1,26 +1,32 @@
 .buttonsWrap {
     width: 450px;
-    background-color: #89b4b0;
+    background-image: linear-gradient(to bottom, #9ce1d9, #4a9886);
     padding: 20px;
     gap: 50px;
     display: flex;
     justify-content: center;
     border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .counterItem {
     width: 450px;
     margin-bottom: 30px;
-    background-color: #89b4b0;
+    background-image: linear-gradient(to bottom, #9ce1d9, #4a9886);
     padding: 50px;
     border-radius: 10px;
     font-size: 50px;
     color: #a45ca4;
     font-weight: bold;
+    text-shadow: 0px 2px 3px rgb(128, 3, 128);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .counterRed {
     color: #bb1515;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0px 2px 3px rgba(253, 9, 9, 0.5);
 }
 
 .spanChange {
